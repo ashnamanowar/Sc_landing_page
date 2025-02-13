@@ -1,25 +1,35 @@
 import React, { useState } from "react";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
-import "../styles/Calendar.css";
 
 function EventCalendar({ events }) {
   const [selectedEvent, setSelectedEvent] = useState(null);
 
-  // Function to handle tile content (red dot for event days)
   const getTileContent = ({ date, view }) => {
     if (view === "month") {
       const eventForDate = events.find(
         (event) => new Date(event.date).toDateString() === date.toDateString()
       );
       if (eventForDate) {
-        return <div className="event-dot"></div>;
+        return <div className="w-3 h-3 bg-[#bc59e1] rounded-full mx-auto mt-1"></div>;
       }
     }
     return null;
   };
 
-  // Function to handle date click
+  const tileClassName = ({ date, view }) => {
+    const today = new Date();
+    if (
+      view === "month" &&
+      date.getDate() === today.getDate() &&
+      date.getMonth() === today.getMonth() &&
+      date.getFullYear() === today.getFullYear()
+    ) {
+      return "!bg-[#bc59e1] !text-white rounded-lg";
+    }
+    return "";
+  };
+
   const handleDateClick = (date) => {
     const eventForDate = events.find(
       (event) => new Date(event.date).toDateString() === date.toDateString()
@@ -27,31 +37,52 @@ function EventCalendar({ events }) {
     setSelectedEvent(eventForDate || null);
   };
 
-  // Function to close modal
   const closeModal = () => {
     setSelectedEvent(null);
   };
 
   return (
-    <div className="calendar-wrapper">
-      <Calendar
-        tileContent={getTileContent}
-        onClickDay={handleDateClick}
-        prevLabel="< Previous"
-        nextLabel="Next >"
-        next2Label={null}
-        prev2Label={null}
-      />
+    <div className="w-full max-w-5xl mx-auto p-6">
+      <div className="flex justify-center">
+        <div className="w-[500px] h-[400px] flex items-center justify-center bg-white shadow-lg rounded-lg">
+          <Calendar
+            tileContent={getTileContent}
+            tileClassName={tileClassName}
+            onClickDay={handleDateClick}
+            prevLabel="< Previous"
+            nextLabel="Next >"
+            next2Label={null}
+            prev2Label={null}
+            className="w-full text-lg p-4"
+          />
+        </div>
+      </div>
 
-      {/* Pop-up Box */}
       {selectedEvent && (
-        <div className="modal-overlay" onClick={closeModal}>
-          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-            <span className="close-btn" onClick={closeModal}>&times;</span>
-            <h3>{selectedEvent.title}</h3>
-            <p><strong>Date:</strong> {new Date(selectedEvent.date).toDateString()}</p>
-            <p><strong>Time:</strong> {selectedEvent.time || "N/A"}</p>
-            <p><strong>Description:</strong> {selectedEvent.description || "No description available."}</p>
+        <div
+          className="fixed inset-0 bg-black bg-opacity-30 flex justify-center items-center z-50"
+          onClick={closeModal}
+        >
+          <div
+            className="bg-white p-6 rounded-lg shadow-lg w-96 text-center relative"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <span
+              className="absolute top-2 right-4 text-2xl cursor-pointer"
+              onClick={closeModal}
+            >
+              &times;
+            </span>
+            <h3 className="text-xl font-bold mb-2">{selectedEvent.title}</h3>
+            <p>
+              <strong>Date:</strong> {new Date(selectedEvent.date).toDateString()}
+            </p>
+            <p>
+              <strong>Time:</strong> {selectedEvent.time || "N/A"}
+            </p>
+            <p>
+              <strong>Description:</strong> {selectedEvent.description || "No description available."}
+            </p>
           </div>
         </div>
       )}

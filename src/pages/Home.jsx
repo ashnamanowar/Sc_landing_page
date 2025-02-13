@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import Navbar from "../components/Navbar"; 
+import Navbar from "../components/Navbar";
 import ClubCard from "../components/ClubCard";
 import EventCard from "../components/EventCard";
 import EventCalendar from "../components/Calendar";
@@ -26,32 +26,20 @@ function Home() {
   const navigate = useNavigate();
 
   return (
-    <div style={{ padding: "20px" }}>
-      {/* Navbar Component */}
+    <div className="p-5">
       <Navbar />
 
-      {/* Main Content */}
-      <div style={{ display: "flex", gap: "20px", marginTop: "60px" }}>
-        
-        {/* Calendar Section */}
-        <div style={{ flex: "1", minWidth: "400px", padding: "10px" }}>
-          <h2>Event Calendar</h2>
+      <div className="flex flex-col md:flex-row gap-5 mt-16">
+        <div className="flex-1 min-w-[400px] p-3">
+          <h2 className="text-2xl font-bold mb-4">Event Calendar</h2>
           <EventCalendar events={events} />
         </div>
 
-        {/* Clubs Section (Scrollable List) */}
-        <div style={{ flex: "1", minWidth: "300px", padding: "10px" }}>
-          <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-            <h2>Clubs</h2>
+        <div className="flex-1 min-w-[300px] p-3">
+          <div className="flex items-center justify-between mb-4">
+            <h2 className="text-2xl font-bold">Clubs</h2>
           </div>
-          <div
-            style={{
-              overflowY: "auto",
-              maxHeight: "500px", // Adjust height as needed
-              borderLeft: "2px solid #ddd",
-              paddingLeft: "10px"
-            }}
-          >
+          <div className="overflow-y-auto max-h-[500px] border-l-2 border-gray-200 pl-3">
             {clubs.map((club) => (
               <ClubCard key={club.id} club={club} onClick={() => navigate(`/club/${club.id}`)} />
             ))}
@@ -59,9 +47,8 @@ function Home() {
         </div>
       </div>
 
-      {/* Upcoming Events Section */}
-      <div style={{ marginTop: "20px" }}>
-        <h2>Upcoming Events</h2>
+      <div className="mt-5">
+        <h2 className="text-2xl font-bold mb-4">Upcoming Events</h2>
         {events.map((event) => (
           <EventCard key={event.id} event={event} onClick={() => navigate(`/event/${event.id}`)} />
         ))}

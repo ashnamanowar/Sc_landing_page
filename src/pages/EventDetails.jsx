@@ -10,10 +10,10 @@ function EventDetails() {
   const event = eventData[id];
 
   return (
-    <div style={{ padding: "20px" }}>
-      <h1>{event?.title}</h1>
-      <p>Date: {event?.date}</p>
-      <p>{event?.details}</p>
+    <div className="p-5">
+      <h1 className="text-2xl font-bold">{event?.title}</h1>
+      <p className="text-gray-700">Date: {event?.date}</p>
+      <p className="text-gray-700">{event?.details}</p>
     </div>
   );
 }

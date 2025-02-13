@@ -2,26 +2,14 @@ function ClubCard({ club, onClick }) {
   return (
     <div 
       onClick={onClick} 
-      style={{ 
-        display: "flex", 
-        alignItems: "center", 
-        border: "1px solid #ccc", 
-        padding: "10px", 
-        cursor: "pointer", 
-        marginBottom: "10px",
-        borderRadius: "8px",
-        backgroundColor: "#f9f9f9"
-      }}
+      className="flex items-center border border-gray-300 p-3 rounded-lg cursor-pointer mb-3 bg-gray-50 hover:bg-gray-100 transition-colors"
     >
-      {/* Club Logo */}
       <img 
         src={club.logo} 
         alt={`${club.name} Logo`} 
-        style={{ width: "40px", height: "40px", marginRight: "10px", borderRadius: "50%" }} 
+        className="w-10 h-10 mr-3 rounded-full"
       />
-
-      {/* Club Name */}
-      <h3 style={{ margin: 0 }}>{club.name}</h3>
+      <h3 className="m-0">{club.name}</h3>
     </div>
   );
 }
